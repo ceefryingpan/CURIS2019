@@ -356,7 +356,7 @@ if __name__ == '__main__':
 
 
         #set goal position example
-        skip = 10
+        skip = 5
         if j % skip == 0:
             reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position - int(j/10))
 
