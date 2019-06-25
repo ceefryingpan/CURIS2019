@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b20c25b0-0d05-4589-919f-a93a25825e10" name="Default Changelist" comment="" />
+    <list default="true" id="b20c25b0-0d05-4589-919f-a93a25825e10" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/CurrentReader.py" beforeDir="false" afterPath="$PROJECT_DIR$/CurrentReader.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,12 +11,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CurrentReader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-324">
-              <caret line="326" column="51" selection-start-line="326" selection-start-column="51" selection-end-line="326" selection-end-column="51" />
+            <state relative-caret-position="293">
+              <caret line="358" column="17" selection-start-line="358" selection-start-column="17" selection-end-line="358" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -22,7 +24,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReadAndFilter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
+            <state relative-caret-position="330">
               <caret line="24" column="14" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
             </state>
           </provider>
@@ -37,6 +39,9 @@
       <find>main</find>
       <find>goal</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -53,6 +58,7 @@
     <option name="width" value="1260" />
     <option name="height" value="676" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -151,6 +157,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="11" y="42" width="1260" height="676" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24939467" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -182,17 +189,17 @@
     <entry file="file://$PROJECT_DIR$/out4_filtered.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReadAndFilter.py">
+    <entry file="file://$PROJECT_DIR$/CurrentReader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="24" column="14" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+        <state relative-caret-position="293">
+          <caret line="358" column="17" selection-start-line="358" selection-start-column="17" selection-end-line="358" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CurrentReader.py">
+    <entry file="file://$PROJECT_DIR$/ReadAndFilter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-324">
-          <caret line="326" column="51" selection-start-line="326" selection-start-column="51" selection-end-line="326" selection-end-column="51" />
+        <state relative-caret-position="330">
+          <caret line="24" column="14" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
         </state>
       </provider>
     </entry>
