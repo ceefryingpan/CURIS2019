@@ -1,17 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+Created on Wed Jun 26 10:11:40 2019
 
-# Author: Ante Qu
+@author: Jason Ah Chuen
 
-#
-# *********     Dynamixel Arm Current Readings      *********
-#
-#
-# Available Dynamixel model on this example : All models using Protocol 2.0
-# This example is designed for using two Dynamixel PRO 54-200, and an USB2DYNAMIXEL.
-# To use another Dynamixel model, such as X series, see their details in E-Manual(support.robotis.com) and edit below variables yourself.
-# Be sure that Dynamixel PRO properties are already set as %% ID : 1 / Baudnum : 1 (Baudrate : 57600)
-#
+Moves arm in the direction and by the amount specified by the user.
+
+"""
 
 import os, ctypes, struct
 
@@ -53,10 +49,10 @@ class DynamixelReader:
                  # baud rate
                  baud_rate = 1000000,
                  # motor ids
-                 m1id = 100, 
-                 m2id = 101,
-                 m3id = 102,
-                 m4id = 103,
+                 m1id = 100,                                # Joint 1 moves horizontally
+                 m2id = 101,                                # Joint 1 moves vertically
+                 m3id = 102,                                # Joint 2 moves horizontally
+                 m4id = 103,                                # Joint 2 moves vertically
                  #protocol ver
                  proto_ver = 2,
                  #SyncRead Addr
@@ -194,7 +190,6 @@ class DynamixelReader:
         elif dxl_error != 0:
             print(dynamixel.getRxPacketError(self.proto_ver, dxl_error))
 
-
     def Read_Value(self, motorId, read_addr, read_len):
         # Read value
         dxl_result = -1
@@ -215,65 +210,6 @@ class DynamixelReader:
             print(dynamixel.getRxPacketError(self.proto_ver, dxl_error))
         return dxl_result
 
-    def Read_Sync_Once(self):
-        groupread_num = self.groupread_num
-        port_num = self.port_num
-        proto_ver = self.proto_ver
-        read_addr = self.read_addr
-        read_len = self.read_len
-        dynamixel.groupSyncReadTxRxPacket(groupread_num)
-        dxl_comm_result = dynamixel.getLastTxRxResult(port_num, proto_ver)
-        if dxl_comm_result != COMM_SUCCESS:
-            print(dynamixel.getTxRxResult(PROTOCOL_VERSION, dxl_comm_result))
-
-        # Check if groupsyncread data of Dynamixel#1 is available
-        dxl_getdata_result = ctypes.c_ubyte(
-            dynamixel.groupSyncReadIsAvailable(groupread_num, self.m1id, read_addr, read_len)).value
-        if dxl_getdata_result != 1:
-            print("[ID:%03d] groupSyncRead getdata failed" % (self.m1id))
-            quit()
-
-        # Check if groupsyncread data of Dynamixel#2 is available
-        dxl_getdata_result = ctypes.c_ubyte(
-            dynamixel.groupSyncReadIsAvailable(groupread_num, self.m2id, read_addr, read_len)).value
-        if dxl_getdata_result != 1:
-            print("[ID:%03d] groupSyncRead getdata failed" % (self.m2id))
-            quit()
-
-        # Check if groupsyncread data of Dynamixel#3 is available
-        dxl_getdata_result = ctypes.c_ubyte(
-            dynamixel.groupSyncReadIsAvailable(groupread_num, self.m3id, read_addr, read_len)).value
-        if dxl_getdata_result != 1:
-            print("[ID:%03d] groupSyncRead getdata failed" % (self.m3id))
-            quit()
-
-        # Check if groupsyncread data of Dynamixel#4 is available
-        dxl_getdata_result = ctypes.c_ubyte(
-            dynamixel.groupSyncReadIsAvailable(groupread_num, self.m4id, read_addr, read_len)).value
-        if dxl_getdata_result != 1:
-            print("[ID:%03d] groupSyncRead getdata failed" % (self.m4id))
-            quit()
-
-        # Get Dynamixel#1 current
-        dxl1_current = ctypes.c_int16(
-            dynamixel.groupSyncReadGetData(groupread_num, self.m1id, read_addr, read_len)).value
-
-        # Get Dynamixel#2 current
-        dxl2_current = ctypes.c_int16(
-            dynamixel.groupSyncReadGetData(groupread_num, self.m2id, read_addr, read_len)).value
-
-        # Get Dynamixel#3 current
-        dxl3_current = ctypes.c_int16(
-            dynamixel.groupSyncReadGetData(groupread_num, self.m3id, read_addr, read_len)).value
-
-        # Get Dynamixel#4 current
-        dxl4_current = ctypes.c_int16(
-            dynamixel.groupSyncReadGetData(groupread_num, self.m4id, read_addr, read_len)).value
-
-        dt = datetime.datetime.now()
-        timestamp = dt.minute * 60000000 + dt.second * 1000000 + dt.microsecond
-        difft = timestamp - self.timestamp0
-        return [difft, dxl1_current, dxl2_current, dxl3_current, dxl4_current]
 
     def Disable_Torque_Close_Port(self):
         ADDR_PRO_TORQUE_ENABLE = 64
@@ -333,40 +269,53 @@ if __name__ == '__main__':
                              proto_ver = 2,
                              # Motor Current Addr and Len
                              read_addr = 126, read_len = 2)
-    fname = "out4_markerslides.csv"
-    fout = open(fname, "w")
-    N_QUERIES = 100
-    print("Format:")
-    print("Timestamp, Current1, Current2, Current3, Current4, dt (msec)")
-    print("Timestamp, Current1, Current2, Current3, Current4", file=fout)
+
     ADDR_PRO_GOAL_POSITION = 116  # address of the goal position and present position
     ADDR_PRO_PRESENT_POSITION = 132
     LEN_PRO_GOAL_POSITION = 4  # length of size of goal and present position
     LEN_PRO_PRESENT_POSITION = 4
+    
+    # Decide which joint to move
+    joint = int(input("Enter 1 for joint 1. Enter 2 for joint 2: "))
+    
+    # Decide which direction to move
+    direction = str(input("Enter l for left direction, r for right direction, u for up direction, d for down direction: "))
 
-    current_position = reader.Read_Value(reader.m3id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    # Decide number of steps/readinga
+    N_QUERIES = int(input("Enter number of steps/readings: "))
+    
+    # Decide which joint to move
+    if joint == 1:
+        if direction == 'l' or direction == 'r':
+            motor = reader.m1id
+        elif direction == 'u' or direction == 'd':
+            motor = reader.m2id
+    elif joint == 2:
+        if direction == 'l' or direction == 'r':
+            motor = reader.m3id
+        elif direction == 'u' or direction == 'd':
+            motor = reader.m4id
+    else:
+        print("Inappropriate input. EXIT")
+        del reader
+        sys.exit(0)
+        
+        
+    # Moving arm
+    
+    current_position = reader.Read_Value(motor, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
     timestamp = 0
     for j in range(N_QUERIES):
-        oldtimestamp = timestamp
-
-        # read all current
-        [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
-
-        #filter
-
 
         #set goal position example
         skip = 10
         if j % skip == 0:
-            reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position + int(j/10))
+            if (direction == 'l' or direction == 'u'):
+                reader.Set_Value(motor, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position - int(j/10))
+            else:
+                reader.Set_Value(motor, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position + int(j/10))
 
-        difft = timestamp - oldtimestamp
-        print(
-            "%09d,%05d,%05d,%05d,%05d, %d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current, difft))
-        print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
-              file=fout)
-    del reader
-    fout.close()
+
 
 #miscellaneous
 # Control table address

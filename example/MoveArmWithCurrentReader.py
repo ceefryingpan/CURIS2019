@@ -1,17 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+Created on Wed Jun 26 10:11:40 2019
 
-# Author: Ante Qu
+@author: Jason Ah Chuen
 
-#
-# *********     Dynamixel Arm Current Readings      *********
-#
-#
-# Available Dynamixel model on this example : All models using Protocol 2.0
-# This example is designed for using two Dynamixel PRO 54-200, and an USB2DYNAMIXEL.
-# To use another Dynamixel model, such as X series, see their details in E-Manual(support.robotis.com) and edit below variables yourself.
-# Be sure that Dynamixel PRO properties are already set as %% ID : 1 / Baudnum : 1 (Baudrate : 57600)
-#
+Moves arm in the direction and by the amount specified by the user.
+Records current readings all along.
+
+"""
 
 import os, ctypes, struct
 
@@ -53,10 +50,10 @@ class DynamixelReader:
                  # baud rate
                  baud_rate = 1000000,
                  # motor ids
-                 m1id = 100, 
-                 m2id = 101,
-                 m3id = 102,
-                 m4id = 103,
+                 m1id = 100,                                # Joint 1 moves horizontally
+                 m2id = 101,                                # Joint 1 moves vertically
+                 m3id = 102,                                # Joint 2 moves horizontally
+                 m4id = 103,                                # Joint 2 moves vertically
                  #protocol ver
                  proto_ver = 2,
                  #SyncRead Addr
@@ -335,7 +332,7 @@ if __name__ == '__main__':
                              read_addr = 126, read_len = 2)
     fname = "out4_markerslides.csv"
     fout = open(fname, "w")
-    N_QUERIES = 100
+
     print("Format:")
     print("Timestamp, Current1, Current2, Current3, Current4, dt (msec)")
     print("Timestamp, Current1, Current2, Current3, Current4", file=fout)
@@ -343,8 +340,35 @@ if __name__ == '__main__':
     ADDR_PRO_PRESENT_POSITION = 132
     LEN_PRO_GOAL_POSITION = 4  # length of size of goal and present position
     LEN_PRO_PRESENT_POSITION = 4
+    
+    # Decide which joint to move
+    joint = int(input("Enter 1 for joint 1. Enter 2 for joint 2: "))
+    
+    # Decide which direction to move
+    direction = str(input("Enter l for left direction, r for right direction, u for up direction, d for down direction: "))
 
-    current_position = reader.Read_Value(reader.m3id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    # Decide number of steps/readinga
+    N_QUERIES = int(input("Enter number of steps/readings: "))
+    
+    if joint == 1:
+        if direction == 'l' or direction == 'r':
+            motor = reader.m1id
+        elif direction == 'u' or direction == 'd':
+            motor = reader.m2id
+    elif joint == 2:
+        if direction == 'l' or direction == 'r':
+            motor = reader.m3id
+        elif direction == 'u' or direction == 'd':
+            motor = reader.m4id
+    else:
+        print("Inappropriate input. EXIT")
+        del reader
+        fout.close()
+        sys.exit(0)
+        
+    # Moving arm and reading current
+        
+    current_position = reader.Read_Value(motor, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
     timestamp = 0
     for j in range(N_QUERIES):
         oldtimestamp = timestamp
@@ -358,7 +382,10 @@ if __name__ == '__main__':
         #set goal position example
         skip = 10
         if j % skip == 0:
-            reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position + int(j/10))
+            if (direction == 'l' or direction == 'u'):
+                reader.Set_Value(motor, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position - int(j/10))
+            else:
+                reader.Set_Value(motor, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position + int(j/10))
 
         difft = timestamp - oldtimestamp
         print(
