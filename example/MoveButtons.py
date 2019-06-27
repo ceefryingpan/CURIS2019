@@ -395,35 +395,35 @@ if __name__ == '__main__':
                 reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr1 + 20)
                 curr1 += 20
                 print('You Pressed Motor 1 UP Key!')
-            elif keyboard.is_pressed('a'):
+            if keyboard.is_pressed('a'):
                 reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr1 - 20)
                 curr1 -= 20
                 print('You Pressed Motor 1 DOWN Key!')
-            elif keyboard.is_pressed('w'):
+            if keyboard.is_pressed('w'):
                 reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 + 20)
                 curr2 += 20
                 print('You Pressed Motor 2 UP Key!')
-            elif keyboard.is_pressed('s'):
+            if keyboard.is_pressed('s'):
                 reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 - 20)
                 curr2 -= 20
                 print('You Pressed Motor 2 DOWN Key!')
-            elif keyboard.is_pressed('e'):
+            if keyboard.is_pressed('e'):
                 reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr3 + 20)
                 curr3 += 20
                 print('You Pressed Motor 3 UP Key!')
-            elif keyboard.is_pressed('d'):
+            if keyboard.is_pressed('d'):
                 reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr3 - 20)
                 curr3 -= 20
                 print('You Pressed Motor 3 DOWN Key!')
-            elif keyboard.is_pressed('r'):  # if key 'q' is pressed
+            if keyboard.is_pressed('r'):  # if key 'q' is pressed
                 reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 + 20)
                 curr4 += 20
                 print('You Pressed Motor 4 UP Key!')
-            elif keyboard.is_pressed('f'):
+            if keyboard.is_pressed('f'):
                 reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 - 20)
                 curr4 -= 20
                 print('You Pressed Motor 4 DOWN Key!')
-            elif keyboard.is_pressed('z'):
+            if keyboard.is_pressed('z'):
                 break  # finishing the loop
             else:
                 pass
