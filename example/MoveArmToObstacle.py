@@ -3,9 +3,10 @@
 """
 Created on Wed Jun 26 12:50:09 2019
 
-@author: jasonahchuen
+@author: Jason Ah Chuen, Ante Qu
 
-Arm keeps moving in the specified direction until an obstacle is hit
+Arm keeps moving in the specified direction until an obstacle (constant event) is hit.
+Prints position of obstacle
 
 """
 
@@ -106,6 +107,12 @@ if __name__ == '__main__':
     x = np.zeros((N_QUERIES,))
     y = np.zeros((N_QUERIES,))
     
+    # Array for event detection
+    e = np.zeros(10)
+    
+    # Number of consecutive events detected
+    num_event = 0
+    
     timestamp = 0
     fs = 240.
     low = 5.
@@ -115,8 +122,9 @@ if __name__ == '__main__':
     N=a.size
     j = 0;
     
+    
     while 1:
-        print("here")
+
         oldtimestamp = timestamp
 
         # read all current
@@ -124,28 +132,45 @@ if __name__ == '__main__':
 
         # compute norm
         x[j] = np.sqrt(dxl1_current**2 + dxl2_current**2 + dxl3_current**2 + dxl4_current**2)
+        
         #filter
         if (j < 20):
             if (j>= 10):
                 # filter everything using lfilter
                 y[0:j+1]= lfilter(b, a, x[0:j+1])
-            else:
-                # don't filter first ten
-                y[j] = x[j]
         else:
             y[j] = 1./a[0] *( b.dot(x[j:j-M:-1]) - a[1:N].dot(y[j-1:j-N:-1]))
+
+        
+        # Event detection. Stop if event is detected. Keep moving arm if no event is detected     
         if (np.abs(y[j]) > 1. and np.abs(y[j-1]) > 1.):
             print( " EVENT ")
-            #if (repeated EVENT)
-                #break
+            
+            # To make sure that event is constant and not just a fluctuation
+            if e[9] == 1:
+                print( " Object detected" )
+                if (direction == 'l' or direction == 'u'):
+                    print(current_position - int(j/10))
+                else:
+                    print(current_position + int(j/10))
+                break
+            else:
+                e[num_event] = 1
+                num_event += 1
+
         else:
+            # Reset array for event detection
+            e = np.zeros(10)
+            num_event = 0
+            
             skip = 10
             if j % skip == 0:
                 if (direction == 'l' or direction == 'u'):
                     reader.Set_Value(motor, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position - int(j/10))
                 else:
                     reader.Set_Value(motor, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position + int(j/10))
-        j += 1
+        
         difft = timestamp - oldtimestamp
         print("%09d,%f" % (timestamp, y[j] ))
+        j+=1
     del reader

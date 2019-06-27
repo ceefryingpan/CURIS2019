@@ -3,7 +3,7 @@
 """
 Created on Wed Jun 26 10:11:40 2019
 
-@author: Jason Ah Chuen
+@author: Jason Ah Chuen, Ante Qu
 
 Moves arm in the direction and by the amount specified by the user.
 
