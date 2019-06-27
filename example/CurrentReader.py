@@ -31,7 +31,6 @@ else:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
 
-# todo Ante: Set this
 os.sys.path.append('../DynamixelSDK-master/python/dynamixel_functions_py')             # Path setting
 os.sys.path.append('.')             # Path setting
 cwd=os.getcwd()
@@ -356,9 +355,9 @@ if __name__ == '__main__':
 
 
         #set goal position example
-        skip = 5
+        skip = 20  # skip represents the interval
         if j % skip == 0:
-            reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position - int(j/10))
+            reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position - int(j))
 
         difft = timestamp - oldtimestamp
         print(
@@ -367,6 +366,7 @@ if __name__ == '__main__':
               file=fout)
     del reader
     fout.close()
+    print("Reading done!")
 
 #miscellaneous
 # Control table address

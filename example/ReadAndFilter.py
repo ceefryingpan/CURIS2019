@@ -74,7 +74,7 @@ if __name__ == '__main__':
         if (j < 20):
             if (j>= 10):
                 # filter everything using lfilter
-                y[0:j+1]= lfilter(b, a, x[0:j+1])
+                y[0:j+1] = lfilter(b, a, x[0:j+1])
             else:
                 # don't filter first ten
                 y[j] = x[j]
