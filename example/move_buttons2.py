@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Author: Ante Qu
+# Author: Ante Qu, Charles Pan, Jason Ah Chuen
 
 #
-# *********     Dynamixel Arm Current Readings      *********
+# *********     Dynamixel Arm Movement and Current Readings      *********
 #
 #
 # Available Dynamixel model on this example : All models using Protocol 2.0
@@ -12,8 +12,17 @@
 # To use another Dynamixel model, such as X series, see their details in E-Manual(support.robotis.com) and edit below variables yourself.
 # Be sure that Dynamixel PRO properties are already set as %% ID : 1 / Baudnum : 1 (Baudrate : 57600)
 #
+# When running the code in Terminal, the keyboard library requires to run as an administrator.
+# Run the code as 'sudo python MoveButtons.py'
+# Use q, a, w, s, e, d, r, f to move motors 1, 2, 3, and 4 respectively.
+# Use z to quit out of program.
+
+# Jason's update: Implemented extra controls: "h" for hello, "w" for the whip dance, "t" to go to the surface and tap it twice
+# Also fixed the problem of jerky motions by using a rectangular velocity profile.
 
 import os, ctypes, struct
+import keyboard
+import time
 
 if os.name == 'nt':
     import msvcrt
@@ -31,7 +40,6 @@ else:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
 
-# todo Ante: Set this
 os.sys.path.append('../DynamixelSDK-master/python/dynamixel_functions_py')             # Path setting
 os.sys.path.append('.')             # Path setting
 cwd=os.getcwd()
@@ -53,7 +61,7 @@ class DynamixelReader:
                  # baud rate
                  baud_rate = 1000000,
                  # motor ids
-                 m1id = 100, 
+                 m1id = 100,
                  m2id = 101,
                  m3id = 102,
                  m4id = 103,
@@ -194,87 +202,6 @@ class DynamixelReader:
         elif dxl_error != 0:
             print(dynamixel.getRxPacketError(self.proto_ver, dxl_error))
 
-
-    def Read_Value(self, motorId, read_addr, read_len):
-        # Read value
-        dxl_result = -1
-        if(read_len == 4):
-            dxl_result = dynamixel.read4ByteTxRx(self.port_num, self.proto_ver, motorId, read_addr)
-        elif(read_len == 2):
-            dxl_result = dynamixel.read2ByteTxRx(self.port_num, self.proto_ver, motorId, read_addr)
-        elif(read_len == 1):
-            dxl_result = dynamixel.read1ByteTxRx(self.port_num, self.proto_ver, motorId, read_addr)
-        else:
-            print('[ID:%03d]: invalid read length %d' %(motorId, read_len))
-            return dxl_result
-        dxl_comm_result = dynamixel.getLastTxRxResult(self.port_num, self.proto_ver)
-        dxl_error = dynamixel.getLastRxPacketError(self.port_num, self.proto_ver)
-        if dxl_comm_result != COMM_SUCCESS:
-            print(dynamixel.getTxRxResult(self.proto_ver, dxl_comm_result))
-        elif dxl_error != 0:
-            print(dynamixel.getRxPacketError(self.proto_ver, dxl_error))
-        return dxl_result
-
-    def Read_Sync_Once(self):
-        groupread_num = self.groupread_num
-        port_num = self.port_num
-        proto_ver = self.proto_ver
-        read_addr = self.read_addr
-        read_len = self.read_len
-        dynamixel.groupSyncReadTxRxPacket(groupread_num)
-        dxl_comm_result = dynamixel.getLastTxRxResult(port_num, proto_ver)
-        if dxl_comm_result != COMM_SUCCESS:
-            print(dynamixel.getTxRxResult(PROTOCOL_VERSION, dxl_comm_result))
-
-        # Check if groupsyncread data of Dynamixel#1 is available
-        dxl_getdata_result = ctypes.c_ubyte(
-            dynamixel.groupSyncReadIsAvailable(groupread_num, self.m1id, read_addr, read_len)).value
-        if dxl_getdata_result != 1:
-            print("[ID:%03d] groupSyncRead getdata failed" % (self.m1id))
-            quit()
-
-        # Check if groupsyncread data of Dynamixel#2 is available
-        dxl_getdata_result = ctypes.c_ubyte(
-            dynamixel.groupSyncReadIsAvailable(groupread_num, self.m2id, read_addr, read_len)).value
-        if dxl_getdata_result != 1:
-            print("[ID:%03d] groupSyncRead getdata failed" % (self.m2id))
-            quit()
-
-        # Check if groupsyncread data of Dynamixel#3 is available
-        dxl_getdata_result = ctypes.c_ubyte(
-            dynamixel.groupSyncReadIsAvailable(groupread_num, self.m3id, read_addr, read_len)).value
-        if dxl_getdata_result != 1:
-            print("[ID:%03d] groupSyncRead getdata failed" % (self.m3id))
-            quit()
-
-        # Check if groupsyncread data of Dynamixel#4 is available
-        dxl_getdata_result = ctypes.c_ubyte(
-            dynamixel.groupSyncReadIsAvailable(groupread_num, self.m4id, read_addr, read_len)).value
-        if dxl_getdata_result != 1:
-            print("[ID:%03d] groupSyncRead getdata failed" % (self.m4id))
-            quit()
-
-        # Get Dynamixel#1 current
-        dxl1_current = ctypes.c_int16(
-            dynamixel.groupSyncReadGetData(groupread_num, self.m1id, read_addr, read_len)).value
-
-        # Get Dynamixel#2 current
-        dxl2_current = ctypes.c_int16(
-            dynamixel.groupSyncReadGetData(groupread_num, self.m2id, read_addr, read_len)).value
-
-        # Get Dynamixel#3 current
-        dxl3_current = ctypes.c_int16(
-            dynamixel.groupSyncReadGetData(groupread_num, self.m3id, read_addr, read_len)).value
-
-        # Get Dynamixel#4 current
-        dxl4_current = ctypes.c_int16(
-            dynamixel.groupSyncReadGetData(groupread_num, self.m4id, read_addr, read_len)).value
-
-        dt = datetime.datetime.now()
-        timestamp = dt.minute * 60000000 + dt.second * 1000000 + dt.microsecond
-        difft = timestamp - self.timestamp0
-        return [difft, dxl1_current, dxl2_current, dxl3_current, dxl4_current]
-
     def Disable_Torque_Close_Port(self):
         ADDR_PRO_TORQUE_ENABLE = 64
         TORQUE_DISABLE = 0
@@ -322,8 +249,29 @@ class DynamixelReader:
 
         #close port
         dynamixel.closePort(self.port_num)
+        
+    def Read_Value(self, motorId, read_addr, read_len):
+        # Read value
+        dxl_result = -1
+        if(read_len == 4):
+            dxl_result = dynamixel.read4ByteTxRx(self.port_num, self.proto_ver, motorId, read_addr)
+        elif(read_len == 2):
+            dxl_result = dynamixel.read2ByteTxRx(self.port_num, self.proto_ver, motorId, read_addr)
+        elif(read_len == 1):
+            dxl_result = dynamixel.read1ByteTxRx(self.port_num, self.proto_ver, motorId, read_addr)
+        else:
+            print('[ID:%03d]: invalid read length %d' %(motorId, read_len))
+            return dxl_result
+        dxl_comm_result = dynamixel.getLastTxRxResult(self.port_num, self.proto_ver)
+        dxl_error = dynamixel.getLastRxPacketError(self.port_num, self.proto_ver)
+        if dxl_comm_result != COMM_SUCCESS:
+            print(dynamixel.getTxRxResult(self.proto_ver, dxl_comm_result))
+        elif dxl_error != 0:
+            print(dynamixel.getRxPacketError(self.proto_ver, dxl_error))
+        return dxl_result
 
 if __name__ == '__main__':
+
     reader = DynamixelReader(device_name = "/dev/tty.usbserial-FT2N0DM5".encode('utf-8'),
                              # baud rate
                              baud_rate = 115200,
@@ -333,40 +281,204 @@ if __name__ == '__main__':
                              proto_ver = 2,
                              # Motor Current Addr and Len
                              read_addr = 126, read_len = 2)
-    fname = "out4_markerslides.csv"
-    fout = open(fname, "w")
-    N_QUERIES = 100
-    print("Format:")
-    print("Timestamp, Current1, Current2, Current3, Current4, dt (msec)")
-    print("Timestamp, Current1, Current2, Current3, Current4", file=fout)
+
+    N_QUERIES = 4000
+
     ADDR_PRO_GOAL_POSITION = 116  # address of the goal position and present position
     ADDR_PRO_PRESENT_POSITION = 132
     LEN_PRO_GOAL_POSITION = 4  # length of size of goal and present position
     LEN_PRO_PRESENT_POSITION = 4
+    
+    
+    ADDR_PRO_GOAL_VELOCITY = 104  # address of the goal velocity and present velocity
+    ADDR_PRO_PRESENT_VELOCITY = 128
 
-    current_position = reader.Read_Value(reader.m3id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
-    timestamp = 0
-    for j in range(N_QUERIES):
-        oldtimestamp = timestamp
-
-        # read all current
-        [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
-
-        #filter
+    ADDR_PRO_ACCELERATION = 108  # acceleration value of profile
+    ADDR_PRO_VELOCITY = 112 # velocity value of profile
 
 
-        #set goal position example
-        skip = 10
-        if j % skip == 0:
-            reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position + int(j/10))
+    # for j in range(N_QUERIES):
+    #     oldtimestamp = timestamp
+    #
+    #     # read all current
+    #     [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
+    #
+    #     #filter
+    #
+    #
+    #     #set goal position example
+    #     skip = 20  # skip represents the interval
+    #     if j % skip == 0:
+    #         reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position - int(j))
+    #
+    #     difft = timestamp - oldtimestamp
+    #     print(
+    #         "%09d,%05d,%05d,%05d,%05d, %d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current, difft))
+    #     print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
+    #           file=fout)
 
-        difft = timestamp - oldtimestamp
-        print(
-            "%09d,%05d,%05d,%05d,%05d, %d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current, difft))
-        print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
-              file=fout)
+    curr1 = reader.Read_Value(reader.m1id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    curr2 = reader.Read_Value(reader.m2id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    curr3 = reader.Read_Value(reader.m3id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    curr4 = reader.Read_Value(reader.m4id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    
+    # Determining type of profile to use (step, rectangular or trapezoidal)
+    
+    reader.Set_Value(reader.m1id, ADDR_PRO_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
+    #reader.Set_Value(reader.m1id, ADDR_PRO_ACCELERATION, LEN_PRO_GOAL_POSITION, 1)
+    reader.Set_Value(reader.m2id, ADDR_PRO_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
+    #reader.Set_Value(reader.m2id, ADDR_PRO_ACCELERATION, LEN_PRO_GOAL_POSITION, 1)
+    reader.Set_Value(reader.m3id, ADDR_PRO_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
+    #reader.Set_Value(reader.m3id, ADDR_PRO_ACCELERATION, LEN_PRO_GOAL_POSITION, 1)
+    reader.Set_Value(reader.m4id, ADDR_PRO_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
+    #reader.Set_Value(reader.m4id, ADDR_PRO_ACCELERATION, LEN_PRO_GOAL_POSITION, 1)
+    
+    
+    # Setting goal velocity
+    reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
+    reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
+    reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
+    reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
+    
+    while True:  # making a loop
+
+
+        try:  # used try so that if user pressed other than the given key error will not be shown
+            if keyboard.is_pressed('q'):
+                reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr1 + 20)
+                curr1 += 20
+                print('You Pressed Motor 1 UP Key!')
+            if keyboard.is_pressed('a'):
+                reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr1 - 20)
+                curr1 -= 20
+                print('You Pressed Motor 1 DOWN Key!')
+            if keyboard.is_pressed('w'):
+                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 + 20)
+                curr2 += 20
+                print('You Pressed Motor 2 UP Key!')
+            if keyboard.is_pressed('s'):
+                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 - 20)
+                curr2 -= 20
+                print('You Pressed Motor 2 DOWN Key!')
+            if keyboard.is_pressed('e'):
+                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr3 + 20)
+                curr3 += 20
+                print('You Pressed Motor 3 UP Key!')
+            if keyboard.is_pressed('d'):
+                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr3 - 20)
+                curr3 -= 20
+                print('You Pressed Motor 3 DOWN Key!')
+            if keyboard.is_pressed('r'):  # if key 'q' is pressed
+                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 + 20)
+                curr4 += 20
+                print('You Pressed Motor 4 UP Key!')
+            if keyboard.is_pressed('f'):
+                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 - 20)
+                curr4 -= 20
+                print('You Pressed Motor 4 DOWN Key!')
+            
+            # Hello World movement
+            if keyboard.is_pressed('h'):
+                reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 3901)
+                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 950)
+                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 288)
+                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 2100)
+                
+                #delay
+                time.sleep(1)
+                
+                #reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 3901)
+                #reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 950)
+                #reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 288)
+                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 780)
+                
+                #delay
+                time.sleep(1)
+                
+                for x in range(5):
+                    #reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 3901)
+                    #reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 950)
+                    reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, -732)
+                    #reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 780)
+                    
+                    #delay
+                    time.sleep(0.5)
+                    #reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 3901)
+                    #reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 950)
+                    reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1148)
+                    #reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 780)
+                    
+                    #delay
+                    time.sleep(0.5)
+            
+                print('hello!')
+            
+            # Tapping movement on horizontal surface
+            if keyboard.is_pressed('t'):
+                
+                # end effector on horizontal table
+                reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 193)
+                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1450)
+                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 307)
+                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 2274)
+                time.sleep(1)
+                
+                for x in range(2):
+                    # move up
+                    reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1400)    
+                    time.sleep(1)
+                    
+                    # move down
+                    reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1450)    
+                    time.sleep(0.5)
+            
+            # Whip dance move
+            if keyboard.is_pressed('m'):
+                
+                reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 3500)
+                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1710)
+                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 2100)
+                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 2050)
+                time.sleep(0.1)
+                
+                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1960)
+                time.sleep(0.1)
+                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 2600)
+                time.sleep(0.1)
+                
+                reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 4400)
+                
+                time.sleep(0.1)
+
+                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1410)
+                time.sleep(0.1)
+                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1360)
+                
+                time.sleep(0.1)
+                
+                reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 4430)
+                time.sleep(0.1)
+                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1420)
+                time.sleep(0.1)
+                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1364)
+                time.sleep(0.1)
+                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1940)
+                
+            if keyboard.is_pressed('z'):
+                break  # finishing the loop
+            else:
+                pass
+        except:
+            break  # if user pressed a key other than the given key the loop will break
+        
+        #print(curr1, end = " ")
+        #print(curr2, end = " ")
+        #print(curr3, end = " ")
+        #print(curr4)
+
     del reader
     fout.close()
+    print("Reading done!")
 
 #miscellaneous
 # Control table address

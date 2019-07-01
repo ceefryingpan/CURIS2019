@@ -92,5 +92,7 @@ if __name__ == '__main__':
             "%09d,%f" % (timestamp, y[j] ))
         print("%09d,%f" % (timestamp, y[j]),
               file=fout)
+        print(y[j])
+        print(x[j])
     del reader
     fout.close()
