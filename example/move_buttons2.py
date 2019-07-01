@@ -295,27 +295,8 @@ if __name__ == '__main__':
 
     ADDR_PRO_ACCELERATION = 108  # acceleration value of profile
     ADDR_PRO_VELOCITY = 112 # velocity value of profile
-
-
-    # for j in range(N_QUERIES):
-    #     oldtimestamp = timestamp
-    #
-    #     # read all current
-    #     [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
-    #
-    #     #filter
-    #
-    #
-    #     #set goal position example
-    #     skip = 20  # skip represents the interval
-    #     if j % skip == 0:
-    #         reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position - int(j))
-    #
-    #     difft = timestamp - oldtimestamp
-    #     print(
-    #         "%09d,%05d,%05d,%05d,%05d, %d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current, difft))
-    #     print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
-    #           file=fout)
+    LEN_PRO_ACCELERATION = 4
+    LEN_PRO_VELOCITY = 4
 
     curr1 = reader.Read_Value(reader.m1id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
     curr2 = reader.Read_Value(reader.m2id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
@@ -324,14 +305,14 @@ if __name__ == '__main__':
     
     # Determining type of profile to use (step, rectangular or trapezoidal)
     
-    reader.Set_Value(reader.m1id, ADDR_PRO_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
-    #reader.Set_Value(reader.m1id, ADDR_PRO_ACCELERATION, LEN_PRO_GOAL_POSITION, 1)
-    reader.Set_Value(reader.m2id, ADDR_PRO_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
-    #reader.Set_Value(reader.m2id, ADDR_PRO_ACCELERATION, LEN_PRO_GOAL_POSITION, 1)
-    reader.Set_Value(reader.m3id, ADDR_PRO_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
-    #reader.Set_Value(reader.m3id, ADDR_PRO_ACCELERATION, LEN_PRO_GOAL_POSITION, 1)
-    reader.Set_Value(reader.m4id, ADDR_PRO_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
-    #reader.Set_Value(reader.m4id, ADDR_PRO_ACCELERATION, LEN_PRO_GOAL_POSITION, 1)
+    reader.Set_Value(reader.m1id, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 1)
+    #reader.Set_Value(reader.m1id, ADDR_PRO_ACCELERATION, LEN_PRO_ACCELERATION, 1)
+    reader.Set_Value(reader.m2id, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 1)
+    #reader.Set_Value(reader.m2id, ADDR_PRO_ACCELERATION, LEN_PRO_ACCELERATION, 1)
+    reader.Set_Value(reader.m3id, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 1)
+    #reader.Set_Value(reader.m3id, ADDR_PRO_ACCELERATION, LEN_PRO_ACCELERATION, 1)
+    reader.Set_Value(reader.m4id, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 1)
+    #reader.Set_Value(reader.m4id, ADDR_PRO_ACCELERATION, LEN_PRO_ACCELERATION, 1)
     
     
     # Setting goal velocity
