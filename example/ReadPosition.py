@@ -307,6 +307,8 @@ if __name__ == '__main__':
     curr3 = reader.Read_Value(reader.m3id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
     curr4 = reader.Read_Value(reader.m4id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
 
+    print("Start Reading")
+
     while True:  # making a loop
         try:  # used try so that if user pressed other than the given key error will not be shown
             if keyboard.is_pressed('q'):
@@ -333,7 +335,7 @@ if __name__ == '__main__':
                 reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr3 - 20)
                 curr3 -= 20
                 print('You Pressed Motor 3 DOWN Key!')
-            if keyboard.is_pressed('r'):  # if key 'q' is pressed
+            if keyboard.is_pressed('r'):
                 reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 + 20)
                 curr4 += 20
                 print('You Pressed Motor 4 UP Key!')

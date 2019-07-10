@@ -72,33 +72,15 @@ if __name__ == '__main__':
     ADDR_PRO_PRESENT_POSITION = 132
     LEN_PRO_GOAL_POSITION = 4
     LEN_PRO_PRESENT_POSITION = 4
-    
-    #motor = get_motor()
-    
-    
-    # Decide which joint to move
-    joint = int(input("Enter 1 for joint 1. Enter 2 for joint 2: "))
-    
-    # Decide which direction to move
-    direction = str(input("Enter l for left direction, r for right direction, u for up direction, d for down direction: "))
-    
-    # Decide which joint to move
-    if joint == 1:
-        if direction == 'l' or direction == 'r':
-            motor = reader.m1id
-        elif direction == 'u' or direction == 'd':
-            motor = reader.m2id
-    elif joint == 2:
-        if direction == 'l' or direction == 'r':
-            motor = reader.m3id
-        elif direction == 'u' or direction == 'd':
-            motor = reader.m4id
-    else:
-        print("Inappropriate input. EXIT")
-        del reader
-        sys.exit(0)
-    
+
     N_QUERIES = 10000000
+
+    # move to start position
+
+    # set drive mode as velocity-based profile
+    ADDR_DRIVE_MODE = 10
+    
+
     
     #Reading current position at start
     current_position = reader.Read_Value(motor, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)

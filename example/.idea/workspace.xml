@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b20c25b0-0d05-4589-919f-a93a25825e10" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ReadPosition.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PushandRead.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/move_buttons2.py" beforeDir="false" afterPath="$PROJECT_DIR$/move_buttons2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MoveArmToObstacle.py" beforeDir="false" afterPath="$PROJECT_DIR$/MoveArmToObstacle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReadPosition.py" beforeDir="false" afterPath="$PROJECT_DIR$/ReadPosition.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out4_markerslides.csv" beforeDir="false" afterPath="$PROJECT_DIR$/out4_markerslides.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,32 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CurrentReader.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="325" column="26" selection-start-line="325" selection-start-column="26" selection-end-line="325" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/move_buttons2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="411" column="21" selection-end-line="488" selection-end-column="88" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ReadPosition.py">
+        <entry file="file://$PROJECT_DIR$/MoveArmToObstacle.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="930">
-              <caret line="62" column="68" selection-start-line="62" selection-start-column="68" selection-end-line="62" selection-end-column="68" />
-              <folding>
-                <element signature="e#1038#1063#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="174">
+              <caret line="81" column="4" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -59,6 +40,7 @@
       <find>torque</find>
       <find>main</find>
       <find>goal</find>
+      <find>exceed</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -69,9 +51,11 @@
       <list>
         <option value="$PROJECT_DIR$/../DynamixelSDK-master/python/dynamixel_functions_py/dynamixel_functions.py" />
         <option value="$PROJECT_DIR$/ReadAndFilter.py" />
-        <option value="$PROJECT_DIR$/move_buttons2.py" />
-        <option value="$PROJECT_DIR$/ReadPosition.py" />
         <option value="$PROJECT_DIR$/CurrentReader.py" />
+        <option value="$PROJECT_DIR$/ReadPosition.py" />
+        <option value="$PROJECT_DIR$/move_buttons2.py" />
+        <option value="$PROJECT_DIR$/PushandRead.py" />
+        <option value="$PROJECT_DIR$/MoveArmToObstacle.py" />
       </list>
     </option>
   </component>
@@ -183,8 +167,8 @@
     </configuration>
     <list>
       <item itemvalue="Python.CurrentReader" />
-      <item itemvalue="Python.ReadPosition" />
       <item itemvalue="Python.ReadAndFilter" />
+      <item itemvalue="Python.ReadPosition" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -202,6 +186,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="11" y="42" width="1260" height="676" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24939467" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -225,8 +210,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../DynamixelSDK-master/python/dynamixel_functions_py/dynamixel_functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="420">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
@@ -235,7 +220,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ReadAndFilter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
+        <state relative-caret-position="330">
           <caret line="24" column="14" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
           <folding>
             <element signature="e#538#565#0" expanded="true" />
@@ -245,37 +230,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MoveArmWithCurrentReader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-766" />
+        <state relative-caret-position="-388" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MoveArmToObstacle.py">
+    <entry file="file://$PROJECT_DIR$/PushandRead.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-822">
-          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CurrentReader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="325" column="26" selection-start-line="325" selection-start-column="26" selection-end-line="325" selection-end-column="26" />
+        <state relative-caret-position="4755">
+          <caret line="317" column="62" selection-start-line="317" selection-start-column="62" selection-end-line="317" selection-end-column="62" />
+          <folding>
+            <element signature="e#1038#1063#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/move_buttons2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="411" column="21" selection-end-line="488" selection-end-column="88" />
+        <state relative-caret-position="-5072">
+          <caret line="1" column="14" lean-forward="true" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+          <folding>
+            <element signature="e#1038#1063#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoveArm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3927" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CurrentReader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1871">
+          <caret line="210" column="42" selection-start-line="210" selection-start-column="42" selection-end-line="210" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ReadPosition.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
-          <caret line="62" column="68" selection-start-line="62" selection-start-column="68" selection-end-line="62" selection-end-column="68" />
+        <state relative-caret-position="-573">
+          <caret line="318" column="104" lean-forward="true" selection-start-line="318" selection-start-column="104" selection-end-line="318" selection-end-column="104" />
           <folding>
             <element signature="e#1038#1063#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MoveArmToObstacle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="81" column="4" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
         </state>
       </provider>
     </entry>
