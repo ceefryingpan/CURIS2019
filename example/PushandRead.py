@@ -287,77 +287,45 @@ if __name__ == '__main__':
                              read_addr=126, read_len=2)
 
     N_QUERIES = 4000
+    motors = [-1, reader.m1id, reader.m2id, reader.m3id, reader.m4id]
 
     ADDR_PRO_GOAL_POSITION = 116  # address of the goal position and present position
     ADDR_PRO_PRESENT_POSITION = 132
     LEN_PRO_GOAL_POSITION = 4  # length of size of goal and present position
     LEN_PRO_PRESENT_POSITION = 4
 
-    ADDR_PRO_GOAL_VELOCITY = 104  # address of the goal velocity and present velocity
-    ADDR_PRO_PRESENT_VELOCITY = 128
-
-    ADDR_PRO_ACCELERATION = 108  # acceleration value of profile
-    ADDR_PRO_VELOCITY = 112  # velocity value of profile
-    LEN_PRO_ACCELERATION = 4
-    LEN_PRO_VELOCITY = 4
-
-    curr1 = reader.Read_Value(reader.m1id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
-    curr2 = reader.Read_Value(reader.m2id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
-    curr3 = reader.Read_Value(reader.m3id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
-    curr4 = reader.Read_Value(reader.m4id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
-
-    # Determining type of profile to use (step, rectangular or trapezoidal)
-
-    reader.Set_Value(reader.m1id, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 1)
-    # reader.Set_Value(reader.m1id, ADDR_PRO_ACCELERATION, LEN_PRO_ACCELERATION, 1)
-    reader.Set_Value(reader.m2id, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 1)
-    # reader.Set_Value(reader.m2id, ADDR_PRO_ACCELERATION, LEN_PRO_ACCELERATION, 1)
-    reader.Set_Value(reader.m3id, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 1)
-    # reader.Set_Value(reader.m3id, ADDR_PRO_ACCELERATION, LEN_PRO_ACCELERATION, 1)
-    reader.Set_Value(reader.m4id, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 1)
-    # reader.Set_Value(reader.m4id, ADDR_PRO_ACCELERATION, LEN_PRO_ACCELERATION, 1)
-
-    # Setting goal velocity
-    reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
-    reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
-    reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
-    reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_VELOCITY, LEN_PRO_GOAL_POSITION, 1)
+    curr1 = reader.Read_Value(motors[1], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    curr2 = reader.Read_Value(motors[2], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    curr3 = reader.Read_Value(motors[3], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    curr4 = reader.Read_Value(motors[4], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
 
     print("Start Reading")
 
     while True:  # making a loop
         try:  # used try so that if user pressed other than the given key error will not be shown
             if keyboard.is_pressed('q'):
-                reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr1 + 20)
-                curr1 += 20
+                reader.Set_Value(motors[1], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr1 + 20)
                 print('You Pressed Motor 1 UP Key!')
             if keyboard.is_pressed('a'):
-                reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr1 - 20)
-                curr1 -= 20
+                reader.Set_Value(motors[1], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr1 - 20)
                 print('You Pressed Motor 1 DOWN Key!')
             if keyboard.is_pressed('w'):
-                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 + 20)
-                curr2 += 20
+                reader.Set_Value(motors[2], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 + 20)
                 print('You Pressed Motor 2 UP Key!')
             if keyboard.is_pressed('s'):
-                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 - 20)
-                curr2 -= 20
+                reader.Set_Value(motors[2], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 - 20)
                 print('You Pressed Motor 2 DOWN Key!')
             if keyboard.is_pressed('e'):
-                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr3 + 20)
-                curr3 += 20
+                reader.Set_Value(motors[3], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr3 + 20)
                 print('You Pressed Motor 3 UP Key!')
             if keyboard.is_pressed('d'):
-                reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr3 - 20)
-                curr3 -= 20
+                reader.Set_Value(motors[3], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr3 - 20)
                 print('You Pressed Motor 3 DOWN Key!')
             if keyboard.is_pressed('r'):
-                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 + 20)
-                curr4 += 20
+                reader.Set_Value(motors[4], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 + 20)
                 print('You Pressed Motor 4 UP Key!')
             if keyboard.is_pressed('f'):
-                reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 - 20)
-                curr4 -= 20
+                reader.Set_Value(motors[4], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 - 20)
                 print('You Pressed Motor 4 DOWN Key!')
             if keyboard.is_pressed('z'):
                 break  # finishing the loop
@@ -365,6 +333,11 @@ if __name__ == '__main__':
                 pass
         except:
             break  # if user pressed a key other than the given key the loop will break
+
+        curr1 = reader.Read_Value(motors[1], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+        curr2 = reader.Read_Value(motors[2], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+        curr3 = reader.Read_Value(motors[3], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+        curr4 = reader.Read_Value(motors[4], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
 
         print(curr1, end = " ")
         print(curr2, end = " ")
