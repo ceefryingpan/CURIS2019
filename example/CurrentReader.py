@@ -49,7 +49,7 @@ COMM_TX_FAIL                = -1001                         # Communication Tx F
 class DynamixelReader:
     def __init__(self,
                  # Check which port is being used on your controller
-                 device_name = "COM5".encode('utf-8'),
+                 device_name = "COM3".encode('utf-8'),
                  # baud rate
                  baud_rate = 1000000,
                  # motor ids
@@ -324,9 +324,9 @@ class DynamixelReader:
         dynamixel.closePort(self.port_num)
 
 if __name__ == '__main__':
-    reader = DynamixelReader(device_name = "/dev/tty.usbserial-FT2N0DM5".encode('utf-8'),
+    reader = DynamixelReader(device_name = "COM3".encode('utf-8'),
                              # baud rate
-                             baud_rate = 115200,
+                             baud_rate = 1000000,
                              # motor ids
                              m1id = 100, m2id = 101, m3id = 102, m4id = 103,
                              # protocol ver

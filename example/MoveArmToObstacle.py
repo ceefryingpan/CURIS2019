@@ -10,9 +10,10 @@ Prints position of obstacle
 
 """
 
-from .CurrentReader import *
+from CurrentReader import *
 import numpy as np
 from scipy.signal import butter, lfilter, freqz
+import time
 
 def butter_bandpass(lowcut, highcut, fs, order=5):
     nyq = 0.5 * fs
@@ -55,9 +56,9 @@ def get_motor():
 
 if __name__ == '__main__':
 
-    reader = DynamixelReader(device_name = "/dev/tty.usbserial-FT2N0DM5".encode('utf-8'),
+    reader = DynamixelReader(device_name = "COM3".encode('utf-8'),
                              # baud rate
-                             baud_rate = 115200,
+                             baud_rate = 1000000,
                              # motor ids
                              m1id = 100, m2id = 101, m3id = 102, m4id = 103,
                              # protocol ver
@@ -92,21 +93,25 @@ if __name__ == '__main__':
     for motor in motors:
         reader.Set_Value(motor, ADDR_PRO_ACCEL, LEN_PRO_ACCEL, 10000)
 
+    print("Moving to starting position!")
+
     # move to starting position
-    reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 245)
-    reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 781)
-    reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 4414)
-    reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 2157)
+    reader.Set_Value(reader.m1id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 308)
+    reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 901)
+    reader.Set_Value(reader.m3id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 311)
+    reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 2775)
 
     # read initial position
-    current_position = reader.Read_Value(reader.m2id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    current_position2 = 901
+    current_position4 = 2775
     
     # Array of readings initialized to 0
     x = np.zeros((N_QUERIES,))
     y = np.zeros((N_QUERIES,))
     
     # Array for event detection
-    e = np.zeros(20)
+    numzeros = 30
+    e = np.zeros(numzeros)
     
     # Number of consecutive events detected
     num_event = 0
@@ -120,6 +125,10 @@ if __name__ == '__main__':
     N = a.size
     j = 0
 
+    print("Ready to read.")
+
+    time.sleep(5)
+
     while 1:
         oldtimestamp = timestamp
 
@@ -130,8 +139,8 @@ if __name__ == '__main__':
         x[j] = np.sqrt(dxl1_current**2 + dxl2_current**2 + dxl3_current**2 + dxl4_current**2)
         
         # filter
-        if j < 20:
-            if j >= 10:
+        if j < numzeros:
+            if j >= (numzeros / 2):
                 # filter everything using lfilter
                 y[0:j+1] = lfilter(b, a, x[0:j+1])
         else:
@@ -142,21 +151,20 @@ if __name__ == '__main__':
             print(" EVENT ")
             
             # To make sure that event is constant and not just a fluctuation
-            if e[19] == 1:
+            if e[numzeros - 1] == 1:
                 print("Object detected")
-                print(current_position - int(j/10))
+                print(current_position2 - int(j))
                 break
             else:
                 e[num_event] = 1
                 num_event += 1
         else:
             # Reset array for event detection
-            e = np.zeros(20)
+            e = np.zeros(numzeros)
             num_event = 0
             
-            skip = 5  # step size for moving arm
-            if j % skip == 0:
-                reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position - int(j/10))
+            reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position2 + int(j / 2))
+            reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position4 - int(j / 2))
         
         difft = timestamp - oldtimestamp
         print("%09d,%f" % (timestamp, y[j] ))
