@@ -65,7 +65,12 @@ if __name__ == '__main__':
               file=fout)
 
     print("Move down finished")
-    # pause
+
+    # pause and take reading
+    time.sleep(0.5)
+    [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
+    print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
+          file=fout)
     time.sleep(0.5)
 
     # move up

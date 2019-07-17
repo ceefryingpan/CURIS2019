@@ -56,15 +56,7 @@ def get_motor():
 
 if __name__ == '__main__':
 
-    reader = DynamixelReader(device_name = "COM3".encode('utf-8'),
-                             # baud rate
-                             baud_rate = 1000000,
-                             # motor ids
-                             m1id = 100, m2id = 101, m3id = 102, m4id = 103,
-                             # protocol ver
-                             proto_ver = 2,
-                             # Motor Current Addr and Len
-                             read_addr = 126, read_len = 2)
+    reader = DynamixelReader()
 
     ADDR_PRO_GOAL_POSITION = 116
     ADDR_PRO_PRESENT_POSITION = 132
@@ -110,7 +102,7 @@ if __name__ == '__main__':
     y = np.zeros((N_QUERIES,))
     
     # Array for event detection
-    numzeros = 30
+    numzeros = 5
     e = np.zeros(numzeros)
     
     # Number of consecutive events detected
@@ -127,7 +119,7 @@ if __name__ == '__main__':
 
     print("Ready to read.")
 
-    time.sleep(5)
+    time.sleep(3)
 
     while 1:
         oldtimestamp = timestamp
@@ -135,38 +127,46 @@ if __name__ == '__main__':
         # read all current
         [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
 
-        # compute norm
-        x[j] = np.sqrt(dxl1_current**2 + dxl2_current**2 + dxl3_current**2 + dxl4_current**2)
-        
+        # # compute norm
+        # x[j] = np.sqrt(dxl1_current**2 + dxl2_current**2 + dxl3_current**2 + dxl4_current**2)
+        #
         # filter
-        if j < numzeros:
-            if j >= (numzeros / 2):
-                # filter everything using lfilter
-                y[0:j+1] = lfilter(b, a, x[0:j+1])
-        else:
-            y[j] = 1./a[0] * (b.dot(x[j:j-M:-1]) - a[1:N].dot(y[j-1:j-N:-1]))
-
-        # Event detection. Stop if object is detected. Keep moving arm if no object is detected
-        if np.abs(y[j]) > 1. and np.abs(y[j-1]) > 1.:
-            print(" EVENT ")
-            
-            # To make sure that event is constant and not just a fluctuation
-            if e[numzeros - 1] == 1:
+        # if j < numzeros:
+        #     if j >= (numzeros / 2):
+        #         # filter everything using lfilter
+        #         y[0:j+1] = lfilter(b, a, x[0:j+1])
+        # else:
+        #     y[j] = 1./a[0] * (b.dot(x[j:j-M:-1]) - a[1:N].dot(y[j-1:j-N:-1]))
+        #
+        # # Event detection. Stop if object is detected. Keep moving arm if no object is detected
+        # if np.abs(y[j]) > 1. and np.abs(y[j-1]) > 1.:
+        #     # print(" EVENT ")
+        #
+        #     # To make sure that event is constant and not just a fluctuation
+        #     if e[numzeros - 1] == 1:
+        #         print("Object detected")
+        #         print(current_position2 - int(j))
+        #         break
+        #     else:
+        #         e[num_event] = 1
+        #         num_event += 1
+        if dxl2_current > 10:
+            num_event += 1
+            if num_event == numzeros:
                 print("Object detected")
-                print(current_position2 - int(j))
                 break
-            else:
-                e[num_event] = 1
-                num_event += 1
         else:
             # Reset array for event detection
-            e = np.zeros(numzeros)
+            # e = np.zeros(numzeros)
+            # num_event = 0
+
+            # reset
             num_event = 0
             
-            reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position2 + int(j / 2))
-            reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position4 - int(j / 2))
+            reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position2 + int(j))
+            reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position4 - int(j))
         
         difft = timestamp - oldtimestamp
-        print("%09d,%f" % (timestamp, y[j] ))
-        j+=1
+        # print("%09d,%f" % (timestamp, y[j] ))
+        j += 1
     del reader
