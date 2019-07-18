@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     reader = DynamixelReader()
 
-    fname = "out4_foamtap.csv"
+    fname = "out4_foamtap4.csv"
     fout = open(fname, "w")
     print("Timestamp, Current1, Current2, Current3, Current4", file=fout)
 
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     time.sleep(3)
 
     # move down first
-    N_QUERIES = 125
+    N_QUERIES = 50
     timestamp = 0
     for num in range(N_QUERIES):
         reader.Set_Value(motors[1], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 + 1)

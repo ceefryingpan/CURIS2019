@@ -3,7 +3,7 @@
 """
 Created on Wed Jun 26 12:50:09 2019
 
-@author: Jason Ah Chuen, Ante Qu
+@author: Charles Pan, Jason Ah Chuen, Ante Qu
 
 Arm keeps moving in the specified direction until an obstacle (constant event) is hit.
 Prints position of obstacle
@@ -15,44 +15,44 @@ import numpy as np
 from scipy.signal import butter, lfilter, freqz
 import time
 
-def butter_bandpass(lowcut, highcut, fs, order=5):
-    nyq = 0.5 * fs
-    low = lowcut / nyq
-    high = highcut / nyq
-    b, a = butter(order, [low, high], btype='band')
-    return b, a
-
-
-def run_filter(data, b, a):
-    y = lfilter(b, a, data)
-    return y
-
-def get_motor():
-    
-    global reader
-    # Decide which joint to move
-    joint = int(input("Enter 1 for joint 1. Enter 2 for joint 2: "))
-    
-    global direction
-    # Decide which direction to move
-    direction = str(input("Enter l for left direction, r for right direction, u for up direction, d for down direction: "))
-    
-    # Decide which joint to move
-    if joint == 1:
-        if direction == 'l' or direction == 'r':
-            return reader.m1id
-        elif direction == 'u' or direction == 'd':
-            return reader.m2id
-    elif joint == 2:
-        if direction == 'l' or direction == 'r':
-            return reader.m3id
-        elif direction == 'u' or direction == 'd':
-            return reader.m4id
-    else:
-        print("Inappropriate input. EXIT")
-        del reader
-        sys.exit(0)
-        
+# def butter_bandpass(lowcut, highcut, fs, order=5):
+#     nyq = 0.5 * fs
+#     low = lowcut / nyq
+#     high = highcut / nyq
+#     b, a = butter(order, [low, high], btype='band')
+#     return b, a
+#
+#
+# def run_filter(data, b, a):
+#     y = lfilter(b, a, data)
+#     return y
+#
+# def get_motor():
+#
+#     global reader
+#     # Decide which joint to move
+#     joint = int(input("Enter 1 for joint 1. Enter 2 for joint 2: "))
+#
+#     global direction
+#     # Decide which direction to move
+#     direction = str(input("Enter l for left direction, r for right direction, u for up direction, d for down direction: "))
+#
+#     # Decide which joint to move
+#     if joint == 1:
+#         if direction == 'l' or direction == 'r':
+#             return reader.m1id
+#         elif direction == 'u' or direction == 'd':
+#             return reader.m2id
+#     elif joint == 2:
+#         if direction == 'l' or direction == 'r':
+#             return reader.m3id
+#         elif direction == 'u' or direction == 'd':
+#             return reader.m4id
+#     else:
+#         print("Inappropriate input. EXIT")
+#         del reader
+#         sys.exit(0)
+#
 
 if __name__ == '__main__':
 
@@ -77,13 +77,13 @@ if __name__ == '__main__':
     ADDR_PRO_VELOCITY = 112
     LEN_PRO_VELOCITY = 4
     for motor in motors:
-        reader.Set_Value(motor, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 75)
+        reader.Set_Value(motor, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 25)
 
     # set profile acceleration
     ADDR_PRO_ACCEL = 108
     LEN_PRO_ACCEL = 4
     for motor in motors:
-        reader.Set_Value(motor, ADDR_PRO_ACCEL, LEN_PRO_ACCEL, 10000)
+        reader.Set_Value(motor, ADDR_PRO_ACCEL, LEN_PRO_ACCEL, 100)
 
     print("Moving to starting position!")
 
@@ -97,24 +97,24 @@ if __name__ == '__main__':
     current_position2 = 901
     current_position4 = 2775
     
-    # Array of readings initialized to 0
-    x = np.zeros((N_QUERIES,))
-    y = np.zeros((N_QUERIES,))
-    
+    # # Array of readings initialized to 0
+    # x = np.zeros((N_QUERIES,))
+    # y = np.zeros((N_QUERIES,))
+
     # Array for event detection
-    numzeros = 5
+    numzeros = 1
     e = np.zeros(numzeros)
     
-    # Number of consecutive events detected
-    num_event = 0
-    
-    timestamp = 0
-    fs = 240.
-    low = 5.
-    hi = 100.
-    b, a = butter_bandpass(low, hi, fs, order=4)
-    M = b.size
-    N = a.size
+    # # Number of consecutive events detected
+    # num_event = 0
+    #
+    # timestamp = 0
+    # fs = 240.
+    # low = 5.
+    # hi = 100.
+    # b, a = butter_bandpass(low, hi, fs, order=4)
+    # M = b.size
+    # N = a.size
     j = 0
 
     print("Ready to read.")
@@ -122,7 +122,6 @@ if __name__ == '__main__':
     time.sleep(3)
 
     while 1:
-        oldtimestamp = timestamp
 
         # read all current
         [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
@@ -150,23 +149,31 @@ if __name__ == '__main__':
         #     else:
         #         e[num_event] = 1
         #         num_event += 1
-        if dxl2_current > 10:
-            num_event += 1
-            if num_event == numzeros:
-                print("Object detected")
-                break
+        if dxl2_current > 60:
+            print("Object detected")
+
+            curr1 = reader.Read_Value(reader.m1id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+            curr2 = reader.Read_Value(reader.m2id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+            curr3 = reader.Read_Value(reader.m3id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+            curr4 = reader.Read_Value(reader.m4id, ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+
+            print(curr1, end=" ")
+            print(curr2, end=" ")
+            print(curr3, end=" ")
+            print(curr4)
+
+            break
         else:
             # Reset array for event detection
             # e = np.zeros(numzeros)
             # num_event = 0
 
-            # reset
-            num_event = 0
+            # # reset
+            # num_event = 0
             
-            reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position2 + int(j))
-            reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position4 - int(j))
-        
-        difft = timestamp - oldtimestamp
+            reader.Set_Value(reader.m2id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position2 + int(j * 2))
+            reader.Set_Value(reader.m4id, ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, current_position4 - int(j * 2))
+
         # print("%09d,%f" % (timestamp, y[j] ))
         j += 1
     del reader
