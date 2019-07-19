@@ -58,7 +58,7 @@ if __name__ == '__main__':
     reader.Set_Value(motors[1], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 1446)
     reader.Set_Value(motors[3], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, 2331)
 
-    time.sleep(0.25)
+    time.sleep(0.5)
 
     while True:
         [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()

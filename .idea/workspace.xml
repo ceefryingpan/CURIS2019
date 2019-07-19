@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63959ba2-fe85-49e1-89ea-61c62068eaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ObstacleInterrupt.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/TestInterrupt.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/comparestiffness.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/MoveArmToObstacle.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/MoveArmToObstacle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ObstacleInterrupt.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/ObstacleInterrupt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/TapandRead.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/TapandRead.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,13 +13,25 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="CURIS2019" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/TapandRead.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="29">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            <state relative-caret-position="-240">
+              <caret line="45" column="21" lean-forward="true" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/example/comparestiffness.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="56" column="35" lean-forward="true" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -56,8 +67,9 @@
         <option value="$PROJECT_DIR$/example/CurrentReader.py" />
         <option value="$PROJECT_DIR$/example/TestInterrupt.py" />
         <option value="$PROJECT_DIR$/example/MoveArmToObstacle.py" />
-        <option value="$PROJECT_DIR$/example/ObstacleInterrupt.py" />
         <option value="$PROJECT_DIR$/example/TapandRead.py" />
+        <option value="$PROJECT_DIR$/example/ObstacleInterrupt.py" />
+        <option value="$PROJECT_DIR$/example/comparestiffness.py" />
       </list>
     </option>
   </component>
@@ -210,10 +222,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="76" y="20" width="1400" height="784" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4992343" visible="true" weight="0.19354838" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4977029" visible="true" weight="0.19354838" />
       <window_info id="Structure" order="1" sideWeight="0.5007657" side_tool="true" weight="0.19354838" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="Favorites" order="2" sideWeight="0.5022971" side_tool="true" weight="0.19354838" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32924962" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32924962" />
@@ -334,11 +347,11 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/example/out4_filtered.csv">
+      <provider selected="true" editor-type-id="csv-text-editor" />
       <provider editor-type-id="text-editor" />
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
       </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/example/CurrentReader.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -348,24 +361,24 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/out4_foamtap1.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
       <provider selected="true" editor-type-id="csv-text-editor">
         <state relative-caret-position="3296">
           <caret line="206" column="33" lean-forward="true" selection-start-line="206" selection-start-column="33" selection-end-line="206" selection-end-column="33" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/out4_markerslides.csv">
-      <provider editor-type-id="text-editor" />
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/out4_markerslides.csv">
       <provider selected="true" editor-type-id="csv-text-editor">
         <state relative-caret-position="48">
           <caret line="3" column="14" lean-forward="true" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
         </state>
+      </provider>
+      <provider editor-type-id="text-editor" />
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/ReadAndFilter.py">
@@ -392,16 +405,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/ObstacleInterrupt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="74" column="97" lean-forward="true" selection-start-line="74" selection-start-column="97" selection-end-line="74" selection-end-column="97" />
-          <folding>
-            <element signature="e#256#283#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/ReadPosition.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="388">
@@ -411,8 +414,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/example/TapandRead.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        <state relative-caret-position="-240">
+          <caret line="45" column="21" lean-forward="true" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/ObstacleInterrupt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-291">
+          <caret line="37" column="65" lean-forward="true" selection-start-line="37" selection-start-column="65" selection-end-line="37" selection-end-column="65" />
+          <folding>
+            <element signature="e#256#283#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/comparestiffness.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="56" column="35" lean-forward="true" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
         </state>
       </provider>
     </entry>

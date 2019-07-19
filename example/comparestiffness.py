@@ -24,10 +24,6 @@ if __name__ == '__main__':
 
     reader = DynamixelReader()
 
-    fname = "out4_foamtap4.csv"
-    fout = open(fname, "w")
-    print("Timestamp, Current1, Current2, Current3, Current4", file=fout)
-
     motors = [reader.m1id, reader.m2id, reader.m3id, reader.m4id]
 
     ADDR_PRO_GOAL_POSITION = 116  # address of the goal position and present position
@@ -35,67 +31,49 @@ if __name__ == '__main__':
     LEN_PRO_GOAL_POSITION = 4  # length of size of goal and present position
     LEN_PRO_PRESENT_POSITION = 4
 
+    N_QUERIES = 75
+    N_OBJECTS = 4
+
     curr1 = reader.Read_Value(motors[0], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
     curr2 = reader.Read_Value(motors[1], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
     curr3 = reader.Read_Value(motors[2], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
     curr4 = reader.Read_Value(motors[3], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
 
-    print("Start Reading")
     time.sleep(3)
+    print("Start Reading")
+    index = -1
+    largest = 0
 
-    # move down first
-    N_QUERIES = 60
-    timestamp = 0
-    for num in range(N_QUERIES):
-        reader.Set_Value(motors[1], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 + 1)
-        curr2 += 1
-        reader.Set_Value(motors[3], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 - 1)
-        curr4 -= 1
+    for i in range(N_OBJECTS):  # do twice
+        print("Start Reading")
+        time.sleep(1)
+        # move down first
+        for num in range(N_QUERIES):
+            reader.Set_Value(motors[1], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 + 1)
+            curr2 += 1
+            reader.Set_Value(motors[3], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 - 1)
+            curr4 -= 1
 
-        oldtimestamp = timestamp
+        print("Move down finished")
 
-        # read all current
+        time.sleep(0.1)
         [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
+        if dxl2_current > largest:
+            index = i + 1
+            largest = dxl2_current
 
-        # set goal position example
-        difft = timestamp - oldtimestamp
-        print(
-            "%09d,%05d,%05d,%05d,%05d, %d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current, difft))
-        print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
-              file=fout)
+        # move up
+        for num in range(N_QUERIES):
+            reader.Set_Value(motors[1], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 - 1)
+            curr2 -= 1
+            reader.Set_Value(motors[3], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 + 1)
+            curr4 += 1
 
-    print("Move down finished")
+        print("Move up finished")
+        time.sleep(5)
 
-    # # pause and take reading
-    # time.sleep(0.5)
-    # [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
-    # print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
-    #       file=fout)
-    # time.sleep(0.5)
-
-    # move up
-    for num in range(N_QUERIES):
-        reader.Set_Value(motors[1], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 - 1)
-        curr2 -= 1
-        reader.Set_Value(motors[3], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 + 1)
-        curr4 += 1
-
-        oldtimestamp = timestamp
-
-        # read all current
-        [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
-
-        # set goal position example
-        difft = timestamp - oldtimestamp
-        print("%09d,%05d,%05d,%05d,%05d, %d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current, difft))
-        print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
-              file=fout)
-
-    print("Move up finished")
-
-    del reader
-    fout.close()
-    print("Reading done!")
+    print(index, end=" ")
+    print("was the stiffest")
 
 # miscellaneous
 # Control table address
