@@ -32,7 +32,7 @@ if __name__ == '__main__':
     LEN_PRO_PRESENT_POSITION = 4
 
     N_QUERIES = 75
-    N_OBJECTS = 4
+    N_OBJECTS = 2
 
     curr1 = reader.Read_Value(motors[0], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
     curr2 = reader.Read_Value(motors[1], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
