@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     reader = DynamixelReader(device_name="COM3".encode('utf-8'),
                              # baud rate
-                             baud_rate=115200,
+                             baud_rate=1000000,
                              # motor ids
                              m1id=100, m2id=101, m3id=102, m4id=103,
                              # protocol ver

@@ -72,42 +72,55 @@ if __name__ == '__main__':
 
     ADDR_PRO_GOAL_POSITION = 116  # address of the goal position and present position
     ADDR_PRO_PRESENT_POSITION = 132
+    ADDR_MOVING = 122
+    ADDR_PRO_VELOCITY = 112
+    ADDR_PRO_ACCEL = 108
     LEN_PRO_GOAL_POSITION = 4  # length of size of goal and present position
     LEN_PRO_PRESENT_POSITION = 4
+    LEN_MOVING = 1
+    LEN_PRO_VELOCITY = 4
+    LEN_PRO_ACCEL = 4
 
     N_OBJECTS = 2
     index = -1
-    smallestdistance = 1000000
+    mostforce = -1
 
-    for i in range(N_OBJECTS):
+    for reps in range(N_OBJECTS):
         print("Move arm to starting position, press z when finished")
         move_arm(motors)
         curr1, curr2, curr3, curr4 = get_readings(motors)
 
+        for motor in motors:
+            reader.Set_Value(motor, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 25)
+            # reader.Set_Value(motor, ADDR_PRO_ACCEL, LEN_PRO_ACCEL, 100)
+        time.sleep(1)
         print("Ready to read")
-        time.sleep(2)
 
-        moving = True
-        distance = 0
-        while moving:
-            # move down until threshold is reached
-            reader.Set_Value(motors[1], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr2 + 1)
-            curr2 += 1
-            reader.Set_Value(motors[3], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr4 - 1)
-            curr4 -= 1
+        reader.Set_Value(motors[0], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, -676)
+        time.sleep(0.25)
 
-            distance += 1
+        readings = []
 
+        while reader.Read_Value(motors[0], ADDR_MOVING, LEN_MOVING): # continuously check whether arm is moving
             [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
-            if dxl2_current > 250:
-                moving = False
-                if distance < smallestdistance:
-                    index = i + 1
-                    smallestdistance = distance
+            print(dxl1_current)
+            readings.append(dxl1_current)
 
-    print("The stiffest object is", end=" ")
+        if (max(readings) > mostforce):
+            index = reps + 1
+            mostforce = max(readings)
+
+        for motor in motors:
+            reader.Set_Value(motor, ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 0)
+            # reader.Set_Value(motor, ADDR_PRO_ACCEL, LEN_PRO_ACCEL, 0)
+
+    print("The most stable object is number", end=" ")
     print(index)
 
+
+
+    print(index, end=" ")
+    print("was the most stable")
 
 # miscellaneous
 # Control table address
@@ -134,4 +147,4 @@ DXL2_ID = 101  # Dynamixel ID: 2
 DXL3_ID = 102  # Dynamixel ID: 3
 DXL4_ID = 103  # Dynamixel ID: 4
 BAUDRATE = 1000000
-DEVICENAME = "COM5".encode('utf-8')  # Check which port is being used on your controller
+DEVICENAME = "COM3".encode('utf-8')  # Check which port is being used on your controller

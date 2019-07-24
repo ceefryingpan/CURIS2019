@@ -277,7 +277,7 @@ class DynamixelReader:
 
 if __name__ == '__main__':
 
-    reader = DynamixelReader(device_name="/COM3".encode('utf-8'),
+    reader = DynamixelReader(device_name="COM3".encode('utf-8'),
                              # baud rate
                              baud_rate=1000000,
                              # motor ids
@@ -287,7 +287,7 @@ if __name__ == '__main__':
                              # Motor Current Addr and Len
                              read_addr=126, read_len=2)
 
-    N_QUERIES = 4000
+    # N_QUERIES = 4000
 
     ADDR_PRO_GOAL_POSITION = 116  # address of the goal position and present position
     ADDR_PRO_PRESENT_POSITION = 132
