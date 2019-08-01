@@ -58,7 +58,6 @@ def detect_object(reader):
 
     while True:
         dxl2_current = reader.Read_Sync_Once()[2]
-        print(dxl2_current)
         if dxl2_current >= 0:
             print("Object detected")
             curr1, curr2, curr3, curr4 = get_readings()
@@ -92,53 +91,44 @@ if __name__ == '__main__':
 
     N_OBJECTS = 4
     index = -1
-    largestdistance = -1
+    smallest = 100000000
 
     for i in range(N_OBJECTS):
         # move to starting position
         print("Moving to starting position")
         for motorindex in range(len(motors)):
-            reader.Set_Value(motors[motorindex], ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 25)
+            reader.Set_Value(motors[motorindex], ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 50)
             reader.Set_Value(motors[motorindex], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, startingpos[motorindex])
-        # while reader.Read_Value(motors[0], ADDR_MOVING, LEN_MOVING):  # if arm is moving
-        #     pass  # do nothing
-        time.sleep(3)
+        time.sleep(2)
 
         # detect object
         print("Searching for object")
         detect_object(reader)
         curr1, curr2, curr3, curr4 = get_readings()
-        # while reader.Read_Value(motors[0], ADDR_MOVING, LEN_MOVING):  # if arm is moving
-        #     pass  # do nothing
-        time.sleep(3)
 
         # tap object
         print("Object found, ready to tap")
         distance = tap_object(reader)
-        if distance > largestdistance:
+        if distance < smallest:
             index = i
-            largestdistance = distance
+            smallest = distance
         print("Tapping finished")
-        # while reader.Read_Value(motors[0], ADDR_MOVING, LEN_MOVING):  # if arm is moving
-        #     pass  # do nothing
-        time.sleep(3)
+        time.sleep(0.5)
 
         # change to next position
-        startingpos[0] += 250
+        startingpos[0] += 400
 
     for times in range(N_OBJECTS):
-        startingpos[0] -= 250
-    startingpos[0] += (index * 250)
+        startingpos[0] -= 400
+    startingpos[0] += (index * 400)
 
     # go to stiffest foam block
     for num in range(len(motors)):
-        reader.Set_Value(motors[motorindex], ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 25)
+        reader.Set_Value(motors[num], ADDR_PRO_VELOCITY, LEN_PRO_VELOCITY, 50)
         reader.Set_Value(motors[num], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, startingpos[num])
-    # while reader.Read_Value(motors[0], ADDR_MOVING, LEN_MOVING):  # if arm is moving
-    #     pass  # do nothing
-    time.sleep(3)
+    time.sleep(1)
     detect_object(reader)
-    print("This is the softest object")
+    print("This is the stiffest object")
 
     time.sleep(5)
     del reader

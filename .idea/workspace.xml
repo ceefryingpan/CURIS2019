@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63959ba2-fe85-49e1-89ea-61c62068eaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/foamdemonstration.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/foaminterrogation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/sidetap.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/out4_foamtap4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/example/out4_foamtap4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ReadPosition.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/ReadPosition.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/foamdemonstration.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/foamdemonstration.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,24 +20,12 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/example/foamdemonstration.py">
+        <entry file="file://$PROJECT_DIR$/example/sidetap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-272">
-              <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+            <state relative-caret-position="-179">
+              <caret line="65" column="29" lean-forward="true" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
               <folding>
-                <element signature="e#827#838#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/comparestability.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="79" column="4" lean-forward="true" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="18" />
-              <folding>
-                <element signature="e#827#838#0" expanded="true" />
+                <element signature="e#256#283#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -74,18 +64,20 @@
         <option value="$PROJECT_DIR$/example/comparestiffness.py" />
         <option value="$PROJECT_DIR$/example/ObstacleInterrupt.py" />
         <option value="$PROJECT_DIR$/example/ButtonsandRead.py" />
-        <option value="$PROJECT_DIR$/example/ReadPosition.py" />
         <option value="$PROJECT_DIR$/example/ObstacleInterruptHorizontal.py" />
         <option value="$PROJECT_DIR$/example/comparestiffnessforce.py" />
         <option value="$PROJECT_DIR$/example/comparestability.py" />
         <option value="$PROJECT_DIR$/example/ObstacleInterruptVertical.py" />
+        <option value="$PROJECT_DIR$/example/ReadPosition.py" />
         <option value="$PROJECT_DIR$/example/foamdemonstration.py" />
+        <option value="$PROJECT_DIR$/example/foaminterrogation.py" />
+        <option value="$PROJECT_DIR$/example/sidetap.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="97" />
-    <option name="y" value="23" />
+    <option name="y" value="18" />
     <option name="width" value="1750" />
     <option name="height" value="980" />
   </component>
@@ -232,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564011072338</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="created foam demonstration script to detect softest and stiffest pieces of foam">
+      <created>1564168493478</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1564168493478</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -245,7 +244,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="78" y="19" width="1400" height="784" extended-state="0" />
+    <frame x="78" y="15" width="1400" height="784" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4977029" visible="true" weight="0.19354838" />
@@ -267,20 +266,20 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.25" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="2" />
-      <window_info anchor="bottom" id="Python Console" order="3" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" />
-      <window_info anchor="bottom" id="Run" order="6" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="10" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4977029" visible="true" weight="0.19354838" />
+      <window_info id="Structure" order="1" sideWeight="0.5007657" side_tool="true" weight="0.19354838" />
+      <window_info id="Favorites" order="2" sideWeight="0.5022971" side_tool="true" weight="0.19354838" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32924962" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32924962" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32924962" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32924962" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32924962" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -293,7 +292,8 @@
     <MESSAGE value="change detection of object" />
     <MESSAGE value="made script for comparing stiffness based on distance before certain force limit reached" />
     <MESSAGE value="a lot of changes - created detection of stability and horizontal movement on top of other things" />
-    <option name="LAST_COMMIT_MESSAGE" value="a lot of changes - created detection of stability and horizontal movement on top of other things" />
+    <MESSAGE value="created foam demonstration script to detect softest and stiffest pieces of foam" />
+    <option name="LAST_COMMIT_MESSAGE" value="created foam demonstration script to detect softest and stiffest pieces of foam" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -384,13 +384,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/MoveArmToObstacle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/ButtonsandRead.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="416">
@@ -411,30 +404,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/MoveArmWithCurrentReader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
-          <caret line="104" column="25" lean-forward="true" selection-start-line="104" selection-start-column="24" selection-end-line="104" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/MoveArm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2304" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/CurrentReader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="51" column="34" selection-start-line="51" selection-start-column="34" selection-end-line="51" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/ReadPosition.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="304" column="45" selection-start-line="304" selection-start-column="45" selection-end-line="304" selection-end-column="45" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/TestInterrupt.py">
@@ -454,30 +426,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/comparestiffnessforce.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="86" column="30" lean-forward="true" selection-start-line="86" selection-start-column="30" selection-end-line="86" selection-end-column="30" />
-          <folding>
-            <element signature="e#827#838#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/ObstacleInterruptVertical.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="244">
           <caret line="62" column="62" selection-start-line="62" selection-start-column="8" selection-end-line="62" selection-end-column="62" />
-          <folding>
-            <element signature="e#256#283#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/ObstacleInterruptHorizontal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="54" column="27" lean-forward="true" selection-start-line="54" selection-start-column="27" selection-end-line="54" selection-end-column="27" />
           <folding>
             <element signature="e#256#283#0" expanded="true" />
           </folding>
@@ -494,12 +446,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/foamdemonstration.py">
+    <entry file="file://$PROJECT_DIR$/example/MoveArmWithCurrentReader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-272">
-          <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+        <state relative-caret-position="596">
+          <caret line="104" column="25" lean-forward="true" selection-start-line="104" selection-start-column="24" selection-end-line="104" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/comparestiffnessforce.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="86" column="30" lean-forward="true" selection-start-line="86" selection-start-column="30" selection-end-line="86" selection-end-column="30" />
           <folding>
             <element signature="e#827#838#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/ReadPosition.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="357" column="14" selection-start-line="357" selection-start-column="14" selection-end-line="357" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/MoveArmToObstacle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/ObstacleInterruptHorizontal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="24" lean-forward="true" selection-end-line="85" />
+          <folding>
+            <element signature="e#256#283#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/foaminterrogation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-800">
+          <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
+          <folding>
+            <element signature="e#827#838#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/foamdemonstration.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="49" />
+          <folding>
+            <element signature="e#827#838#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/CurrentReader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="352" column="101" lean-forward="true" selection-start-line="352" selection-start-column="8" selection-end-line="352" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/sidetap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-179">
+          <caret line="65" column="29" lean-forward="true" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
+          <folding>
+            <element signature="e#256#283#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -356,7 +356,6 @@ if __name__ == '__main__':
         print(curr4)
 
     del reader
-    fout.close()
     print("Reading done!")
 
 # miscellaneous
