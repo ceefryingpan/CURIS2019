@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63959ba2-fe85-49e1-89ea-61c62068eaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/foaminterrogation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/sidetap.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/objectprofile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ReadPosition.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/ReadPosition.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/foamdemonstration.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/foamdemonstration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/sidetap.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/sidetap.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,11 +17,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/example/objectprofile.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="531">
+              <caret line="99" column="38" lean-forward="true" selection-start-line="99" selection-start-column="38" selection-end-line="99" selection-end-column="38" />
+              <folding>
+                <element signature="e#256#283#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/sidetap.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-179">
-              <caret line="65" column="29" lean-forward="true" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
+            <state relative-caret-position="528">
+              <caret line="109" column="30" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
               <folding>
                 <element signature="e#256#283#0" expanded="true" />
               </folding>
@@ -71,14 +81,15 @@
         <option value="$PROJECT_DIR$/example/ReadPosition.py" />
         <option value="$PROJECT_DIR$/example/foamdemonstration.py" />
         <option value="$PROJECT_DIR$/example/foaminterrogation.py" />
+        <option value="$PROJECT_DIR$/example/objectprofile.py" />
         <option value="$PROJECT_DIR$/example/sidetap.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="97" />
-    <option name="y" value="18" />
-    <option name="width" value="1750" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-13" />
+    <option name="y" value="-20" />
+    <option name="width" value="1933" />
     <option name="height" value="980" />
   </component>
   <component name="ProjectView">
@@ -231,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564168493478</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="created interrogation method for side detection of object, detection of an object tipping over, and beginning work for determining a sliding object">
+      <created>1564695260432</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1564695260432</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -244,10 +262,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="78" y="15" width="1400" height="784" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4977029" visible="true" weight="0.19354838" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4977029" visible="true" weight="0.17437252" />
       <window_info id="Structure" order="1" sideWeight="0.5007657" side_tool="true" weight="0.19354838" />
       <window_info id="Favorites" order="2" sideWeight="0.5022971" side_tool="true" weight="0.19354838" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -293,7 +311,8 @@
     <MESSAGE value="made script for comparing stiffness based on distance before certain force limit reached" />
     <MESSAGE value="a lot of changes - created detection of stability and horizontal movement on top of other things" />
     <MESSAGE value="created foam demonstration script to detect softest and stiffest pieces of foam" />
-    <option name="LAST_COMMIT_MESSAGE" value="created foam demonstration script to detect softest and stiffest pieces of foam" />
+    <MESSAGE value="created interrogation method for side detection of object, detection of an object tipping over, and beginning work for determining a sliding object" />
+    <option name="LAST_COMMIT_MESSAGE" value="created interrogation method for side detection of object, detection of an object tipping over, and beginning work for determining a sliding object" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -312,6 +331,11 @@
           <url>file://$PROJECT_DIR$/example/ReadAndFilter.py</url>
           <line>15</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/example/objectprofile.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -374,13 +398,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
           <caret line="68" column="45" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/TapandRead.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -487,16 +504,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/foaminterrogation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-800">
-          <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
-          <folding>
-            <element signature="e#827#838#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/foamdemonstration.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="384">
@@ -514,10 +521,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/example/TapandRead.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-128">
+          <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/foaminterrogation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1024">
+          <caret line="84" column="33" lean-forward="true" selection-start-line="84" selection-start-column="33" selection-end-line="84" selection-end-column="33" />
+          <folding>
+            <element signature="e#827#838#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/objectprofile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="99" column="38" lean-forward="true" selection-start-line="99" selection-start-column="38" selection-end-line="99" selection-end-column="38" />
+          <folding>
+            <element signature="e#256#283#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/example/sidetap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-179">
-          <caret line="65" column="29" lean-forward="true" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
+        <state relative-caret-position="528">
+          <caret line="109" column="30" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
           <folding>
             <element signature="e#256#283#0" expanded="true" />
           </folding>
