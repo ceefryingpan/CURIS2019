@@ -41,11 +41,11 @@ if __name__ == '__main__':
 
     print("Moving to starting position!")
 
-    # detection and tipping over start point
-    curr1 = 110
-    curr2 = 1200
-    curr3 = 303
-    curr4 = 2600
+    # # detection and tipping over start point
+    # curr1 = 110
+    # curr2 = 1200
+    # curr3 = 303
+    # curr4 = 2600
 
     # # sliding start point
     # curr1 = 215
@@ -53,11 +53,11 @@ if __name__ == '__main__':
     # curr3 = 284
     # curr4 = 2324
 
-    # # sliding inverted start point
-    # curr1 = 301
-    # curr2 = 1500
-    # curr3 = -135
-    # curr4 = 2468
+    # sliding inverted start point
+    curr1 = 301
+    curr2 = 1500
+    curr3 = -135
+    curr4 = 2468
 
     # move to starting position
     reader.Set_Value(motors[0], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, curr1)
@@ -97,33 +97,33 @@ if __name__ == '__main__':
     #           file=fout)
     # fout.close()
 
-    # # detecting whether an object tips over
-    while True:
-        dxl1_current = reader.Read_Sync_Once()[1]
-        print(dxl1_current)
-        if dxl1_current <= -20:
-            print("Object detected")
-            break
-    while True:
-        dxl1_current = reader.Read_Sync_Once()[1]
-        print(dxl1_current)
-        if dxl1_current >= -10:
-            newcurr1 = reader.Read_Value(motors[0], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
-            reader.Set_Value(motors[0], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, newcurr1)
-            print("Object tipped over")
-            break
+    # # # detecting whether an object tips over
+    # while True:
+    #     dxl1_current = reader.Read_Sync_Once()[1]
+    #     print(dxl1_current)
+    #     if dxl1_current <= -20:
+    #         print("Object detected")
+    #         break
+    # while True:
+    #     dxl1_current = reader.Read_Sync_Once()[1]
+    #     print(dxl1_current)
+    #     if dxl1_current >= -10:
+    #         newcurr1 = reader.Read_Value(motors[0], ADDR_PRO_PRESENT_POSITION, LEN_PRO_PRESENT_POSITION)
+    #         reader.Set_Value(motors[0], ADDR_PRO_GOAL_POSITION, LEN_PRO_GOAL_POSITION, newcurr1)
+    #         print("Object tipped over")
+    #         break
     #
-    # # for gathering data on and detecting an object sliding
-    # fname = "slidinginverted_markerslides.csv"
-    # fout = open(fname, "w")
-    # print("Timestamp, Current1, Current2, Current3, Current4", file=fout)
-    # while reader.Read_Value(motors[0], ADDR_MOVING, LEN_MOVING):
-    #     [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
-    #     print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
-    #           file=fout)
-    #     if dxl1_current < -50:
-    #         print("Object is currently sliding")
-    # fout.close()
+    # for gathering data on and detecting an object sliding
+    fname = "slidingtoolbox_markerslides.csv"
+    fout = open(fname, "w")
+    print("Timestamp, Current1, Current2, Current3, Current4", file=fout)
+    while reader.Read_Value(motors[0], ADDR_MOVING, LEN_MOVING):
+        [timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current] = reader.Read_Sync_Once()
+        # print("%09d,%05d,%05d,%05d,%05d" % (timestamp, dxl1_current, dxl2_current, dxl3_current, dxl4_current),
+        #       file=fout)
+        if dxl1_current < -50:
+            print("Object is currently sliding")
+    fout.close()
 
     time.sleep(3)
     del reader

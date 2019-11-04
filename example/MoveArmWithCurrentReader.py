@@ -42,7 +42,7 @@ COMM_SUCCESS                = 0                             # Communication Succ
 COMM_TX_FAIL                = -1001                         # Communication Tx Failed
 
 if __name__ == '__main__':
-    reader = DynamixelReader(device_name = "/dev/tty.usbserial-FT2N0DM5".encode('utf-8'),
+    reader = DynamixelReader(device_name = "COM5".encode('utf-8'),
                              # baud rate
                              baud_rate = 115200,
                              # motor ids
